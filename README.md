@@ -41,15 +41,14 @@ INGRESS_GATEWAY_IP=$(kubectl get service asm-ingressgateway -n ingress-gateway -
 curl -s -H "Host: whereami.mesh.example.com" http://$INGRESS_GATEWAY_IP/ | jq
 ```
 
-Now that this works, we can start setting up a simple JWKS endpoint using Cloud Run
-
 ### testing
 
 ```
 # https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
 
-kubectl apply -f requestAuth/
-kubectl apply -f serviceEntry/
+kubectl apply -f requestAuth/ # apply request auth 
+kubectl apply -f serviceEntry/ # we need this; otherwise we get "Jwks remote fetch is failed" error and 
+# fetch pubkey [uri = https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json] failed: [cluster = outbound|443||jwks-service.dchiesa.demo.altostrat.com] is not configured in Envoy log
 
 TOKEN=$(curl https://jwks-service.dchiesa.demo.altostrat.com/token -s -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "3600s"}')
 curl -s -H "Host: whereami.mesh.example.com" -H "Authorization: Bearer ${TOKEN}" http://$INGRESS_GATEWAY_IP/ | jq

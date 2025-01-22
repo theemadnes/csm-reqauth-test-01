@@ -12,6 +12,9 @@ spec:
   - issuer: "jwks-service.dchiesa.demo.altostrat.com"
     jwksUri: "https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json"
     forwardOriginalToken: true
+    fromHeaders: 
+        - name: Authorization
+          prefix: "Bearer "
 ---
 apiVersion: security.istio.io/v1
 kind: RequestAuthentication
@@ -28,8 +31,7 @@ spec:
     jwksUri: "https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json"
     forwardOriginalToken: true
     fromHeaders: 
-        - 
-          name: Authorization
+        - name: Authorization
           prefix: "Bearer "
 ---
 apiVersion: security.istio.io/v1

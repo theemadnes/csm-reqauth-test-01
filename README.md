@@ -49,17 +49,9 @@ Now that this works, we can start setting up a simple JWKS endpoint using Cloud 
 # https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
 
 kubectl apply -f requestAuth/
+kubectl apply -f serviceEntry/
 
-curl https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
-curl https://jwks-service.dchiesa.demo.altostrat.com/keyids
-
-/keyids
-
-curl https://jwks-service.dchiesa.demo.altostrat.com/token -H 'Content-Type: application/json'
-
-curl https://jwks-service.dchiesa.demo.altostrat.com/token -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "300s"}'
-
-TOKEN=$(curl https://jwks-service.dchiesa.demo.altostrat.com/token -s -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "3600s","keyid": "b5ad0832"}')
+TOKEN=$(curl https://jwks-service.dchiesa.demo.altostrat.com/token -s -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "3600s"}')
 curl -s -H "Host: whereami.mesh.example.com" -H "Authorization: Bearer ${TOKEN}" http://$INGRESS_GATEWAY_IP/
 
 

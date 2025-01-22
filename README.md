@@ -52,7 +52,7 @@ kubectl apply -f requestAuth/
 kubectl apply -f serviceEntry/
 
 TOKEN=$(curl https://jwks-service.dchiesa.demo.altostrat.com/token -s -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "3600s"}')
-curl -s -H "Host: whereami.mesh.example.com" -H "Authorization: Bearer ${TOKEN}" http://$INGRESS_GATEWAY_IP/
+curl -s -H "Host: whereami.mesh.example.com" -H "Authorization: Bearer ${TOKEN}" http://$INGRESS_GATEWAY_IP/ | jq
 
 
 ```

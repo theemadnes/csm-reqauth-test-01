@@ -9,8 +9,8 @@ spec:
       #app: whereami
       asm: ingressgateway
   jwtRules:
-  - issuer: jwks-service.dchiesa.demo.altostrat.com
-    jwksUri: https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
+  - issuer: "jwks-service.dchiesa.demo.altostrat.com"
+    jwksUri: "https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json"
     forwardOriginalToken: true
 ---
 apiVersion: security.istio.io/v1
@@ -24,8 +24,8 @@ spec:
       app: whereami
       #asm: ingressgateway
   jwtRules:
-  - issuer: jwks-service.dchiesa.demo.altostrat.com
-    jwksUri: https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
+  - issuer: "jwks-service.dchiesa.demo.altostrat.com"
+    jwksUri: "https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json"
     forwardOriginalToken: true
     fromHeaders: 
         - 

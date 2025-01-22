@@ -1,0 +1,49 @@
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: ig-ra
+  namespace: ingress-gateway
+spec:
+  selector:
+    matchLabels:
+      #app: whereami
+      asm: ingressgateway
+  jwtRules:
+  - issuer: jwks-service.dchiesa.demo.altostrat.com
+    jwksUri: https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
+    forwardOriginalToken: true
+---
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: whereami-ra
+  namespace: whereami
+spec:
+  selector:
+    matchLabels:
+      app: whereami
+      #asm: ingressgateway
+  jwtRules:
+  - issuer: jwks-service.dchiesa.demo.altostrat.com
+    jwksUri: https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
+    forwardOriginalToken: true
+    fromHeaders: 
+        - 
+          name: Authorization
+          prefix: "Bearer "
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: whereami-authpol
+  namespace: whereami
+spec: 
+  action: ALLOW
+  selector:
+    matchLabels:
+      app: whereami
+      #asm: ingressgateway
+  rules:
+  - from:
+    - source:
+        requestPrincipals: ["*"]

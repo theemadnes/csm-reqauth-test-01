@@ -43,6 +43,33 @@ curl -s -H "Host: whereami.mesh.example.com" http://$INGRESS_GATEWAY_IP/ | jq
 
 Now that this works, we can start setting up a simple JWKS endpoint using Cloud Run
 
-### create Cloud Run JWT system
+### testing
+
+```
+# https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
+
+kubectl apply -f requestAuth/
+
+curl https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
+curl https://jwks-service.dchiesa.demo.altostrat.com/keyids
+
+/keyids
+
+curl https://jwks-service.dchiesa.demo.altostrat.com/token -H 'Content-Type: application/json'
+
+curl https://jwks-service.dchiesa.demo.altostrat.com/token -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "300s"}'
+
+curl -X POST https://reqbin.com/echo/post/json
+   -H 'Content-Type: application/json'
+   -d '{"login":"my_login","password":"my_password"}'
+
+
+
+
+TOKEN=$(curl https://jwks-service.dchiesa.demo.altostrat.com/token -s -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "300s","keyid": "b5ad0832"}')
+curl -s -H "Host: whereami.mesh.example.com" -H "Authorization: Bearer ${TOKEN}" http://$INGRESS_GATEWAY_IP/
+
+
+```
 
 

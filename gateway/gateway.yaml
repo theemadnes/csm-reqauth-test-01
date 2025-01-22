@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: asm-ingressgateway
+  namespace: ingress-gateway
+spec:
+ servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - "*" # IMPORTANT: Must use wildcard here when using SSL, as SNI isn't passed from GFE
+    tls:
+      mode: SIMPLE
+      credentialName: ss-cert

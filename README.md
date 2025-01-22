@@ -59,13 +59,6 @@ curl https://jwks-service.dchiesa.demo.altostrat.com/token -H 'Content-Type: app
 
 curl https://jwks-service.dchiesa.demo.altostrat.com/token -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "300s"}'
 
-curl -X POST https://reqbin.com/echo/post/json
-   -H 'Content-Type: application/json'
-   -d '{"login":"my_login","password":"my_password"}'
-
-
-
-
 TOKEN=$(curl https://jwks-service.dchiesa.demo.altostrat.com/token -s -H 'Content-Type: application/json' -d '{"alg": "RS256","expiry": "3600s","keyid": "b5ad0832"}')
 curl -s -H "Host: whereami.mesh.example.com" -H "Authorization: Bearer ${TOKEN}" http://$INGRESS_GATEWAY_IP/
 

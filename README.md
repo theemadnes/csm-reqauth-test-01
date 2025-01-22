@@ -3,6 +3,12 @@ testing some aspects of requestAuthorization using service entries w JWTs
 
 this requires a CSM-enabled GKE cluster set to your kube context
 
+### set your project to envvar
+
+```
+export project=e2m-private-test-01 # replace with your project name
+```
+
 ### setup ingress gateway 
 
 in this case, we're just going to use a standard ingress gateway with external NLB
@@ -32,6 +38,11 @@ kubectl -n whereami apply -f whereami-vs/
 INGRESS_GATEWAY_IP=$(kubectl get service asm-ingressgateway -n ingress-gateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
 # call the workload 
-curl -s -H "Host: whereami.mesh.example.com" http://$INGRESS_GATEWAY_IP/workload-1/ | jq
+curl -s -H "Host: whereami.mesh.example.com" http://$INGRESS_GATEWAY_IP/ | jq
 ```
+
+Now that this works, we can start setting up a simple JWKS endpoint using Cloud Run
+
+### create Cloud Run JWT system
+
 

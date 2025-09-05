@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: jwks-service-dr
+spec:
+  host: jwks-service.dchiesa.demo.altostrat.com # Replace with actual external service hostname
+  trafficPolicy:
+    tls:
+      mode: SIMPLE
+      sni: jwks-service.dchiesa.demo.altostrat.com
+  subsets:
+    - name: app-traffic
+      trafficPolicy:
+        tls:
+          mode: DISABLE

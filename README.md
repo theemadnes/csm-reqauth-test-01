@@ -56,4 +56,11 @@ curl -s -H "Host: whereami.mesh.example.com" -H "Authorization: Bearer ${TOKEN}"
 
 ```
 
+### scratch
+
+```
+curl -v https://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
+curl -v http://jwks-service.dchiesa.demo.altostrat.com/.well-known/jwks.json
+```
+
 

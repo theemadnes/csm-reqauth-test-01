@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: jwks-vs
+  #namespace: whereami
+spec:
+  #gateways:
+  #- ingress-gateway/asm-ingressgateway
+  #- mesh
+  hosts:
+  - jwks-service.dchiesa.demo.altostrat.com
+  http:
+  - route:
+    - destination:
+        host: jwks-service.dchiesa.demo.altostrat.com
+        subset: app-traffic
